@@ -17,37 +17,43 @@
  *
  */
 
-#ifndef GAS_H
-#define GAS_H
+#include "agas.h"
 
-#include <QTextStream>
-
-class Gas
+aGas::aGas()
 {
-public:
-    Gas();
-    Gas(const QString &FileName);
-    Gas(const Gas& other);
-    ~Gas();
-    Gas& operator=(const Gas& other);
-    bool operator==(const Gas& other);
 
-    QString Name;
-    QString Formula;
-    double Aik[4];
-    double Delta_i[6];
-    
-    double T_c;
-    double Ro_c;
-    double M;
-    double Omega;    
-    
-    static int i[6];
-    static int di [6];
-    
-    
-    friend QTextStream & operator<<(QTextStream & out, const Gas & gas);
-    friend QTextStream & operator>>(QTextStream & in, Gas & gas);
-};
+}
 
-#endif // GAS_H
+aGas::aGas(const aGas& other)
+{
+
+}
+
+aGas::~aGas()
+{
+
+}
+
+aGas& aGas::operator=(const aGas& other)
+{
+
+}
+
+bool aGas::operator==(const aGas& other)
+{
+
+}
+
+QTextStream & operator<<(QTextStream & out, const aGas & agas)
+{
+    for(int i=0; i<21; ++i)
+        out<<agas.c[i];
+    return out;
+}
+
+QTextStream & operator>>(QTextStream & in, aGas & agas)
+{
+    for(int i=0; i<21; ++i)
+        in>>agas.c[i];
+    return in;
+}

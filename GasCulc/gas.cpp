@@ -60,8 +60,10 @@ bool Gas::operator==(const Gas& other)
 QTextStream & operator<<(QTextStream & out, const Gas & gas)
 {
     out<<gas.Name<<"\n";
+    out<<gas.Formula<<"\n";
+    
     for (int i=0; i<4; ++i)
-        out<<gas.K_i[i]<<"\n";
+        out<<gas.Aik[i]<<"\n";
     out<<"\n";
 
     out<<gas.T_c<<"\n";
@@ -80,9 +82,10 @@ QTextStream & operator>>(QTextStream & in, Gas & gas)
 {
 
     in>>gas.Name;
+    in>>gas.Formula;
 
     for (int i=0; i<4; ++i)
-        in>>gas.K_i[i];
+        in>>gas.Aik[i];
 
     in>>gas.T_c;
     in>>gas.Ro_c;
@@ -91,8 +94,6 @@ QTextStream & operator>>(QTextStream & in, Gas & gas)
 
     for (int i=0; i<6; ++i)
         in>>gas.Delta_i[i];
-    /*
-    */
+    
     return in;
-
 }
