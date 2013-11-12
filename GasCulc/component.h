@@ -31,11 +31,13 @@ public:
     ~Component();
     Component& operator=(const Component& other);
     bool operator==(const Component& other);
+    
     int Number;
     QString Name;
     QString Formula;
     QString File;
     double v;
+    
     double mu_0i(double ateta);
     double teta(double T){return T/100.0;} 
 

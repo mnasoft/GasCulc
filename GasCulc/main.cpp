@@ -5,8 +5,35 @@
 
 #include <QFile>
 #include <iostream>
+#include "agas.h"
 
 int main(int argc, char** argv)
+{
+    aGas G;
+    QFile in("../Gas/Gas_01.txt");
+    if (in.open( QFile::ReadOnly))
+    {
+        QTextStream IN(&in);
+        IN.setCodec("UTF-8");
+        IN>>G;
+    }
+    in.close();
+
+    QFile out("../Gas/Gas_01.rez");
+    if (out.open( QFile::WriteOnly))
+    {
+        QTextStream OUT(&out);
+        OUT.setCodec("UTF-8");
+        OUT.setRealNumberPrecision (10 );
+        OUT.setRealNumberNotation(QTextStream::ScientificNotation);
+        OUT.setNumberFlags(QTextStream::ForceSign);
+        OUT<<G;
+    }
+    out.close();
+
+}
+
+/*
 {
     QStringList components;
     components << "N2"<<"CO2"<<"CH4"<<"C2H6"<<"C3H8"<<"C4H10"<<"I-C4H10"<<"N-C5H12"<<"I-C5H12"<<"C6H14"<<"C7H16"<<"H2"<<"CO"<<"H2O" <<"He";
@@ -30,7 +57,7 @@ int main(int argc, char** argv)
         in.close();
         ++i;
     }
-    
+
     int z1=sizeof(gases);
     int z2 =sizeof(gases[0]);
 
@@ -49,10 +76,9 @@ int main(int argc, char** argv)
         }
         out.close();
     }
-
-//        std::cout << (*c_Iter).toLocal8Bit().constData() << endl;
-
 }
+*/
+
 /*
 {
     Gas N2;

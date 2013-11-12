@@ -19,6 +19,7 @@
 
 #include "component.h"
 #include <math.h>
+#include <QFile>
 
 Component::Component()
 {
@@ -26,8 +27,13 @@ Component::Component()
 }
 
 Component::Component(const Component& other)
+: Gas(other)
 {
-
+    Number=other.Number;
+    Name=other.Name;
+    Formula=other.Formula;
+    File=other.File;
+    v=other.v;
 }
 
 Component::~Component()
@@ -37,7 +43,11 @@ Component::~Component()
 
 Component& Component::operator=(const Component& other)
 {
-
+    Number=other.Number;
+    Name=other.Name;
+    Formula=other.Formula;
+    File=other.File;
+    v=other.v;
 }
 
 bool Component::operator==(const Component& other)
@@ -47,11 +57,14 @@ bool Component::operator==(const Component& other)
 
 QTextStream & operator<<(QTextStream & out, const Component & component)
 {
-    out<<component.Number<<"\n";
-    out<<component.Name<<"\n";
-    out<<component.Formula<<"\n";
-    out<<component.File<<"\n";
+    out<<component.Number<<"\t";
+    out<<component.Name<<"\t";
+    out<<component.Formula<<"\t";
+    out<<component.File<<"\t";
     out<<component.v<<"\n";
+
+    const Gas & g= dynamic_cast <const Gas &> (component);
+    out<<g;
     return out;
 }
 
@@ -62,15 +75,27 @@ QTextStream & operator>>(QTextStream & in, Component & component)
     in>>component.Formula;
     in>>component.File;
     in>>component.v;
+    QString s_tmp=QString("")+"../ComponentData/"+component.File+".txt";
+
+    QFile i(s_tmp);
+    if (i.open( QFile::ReadOnly))
+    {
+        QTextStream IN(&i);
+        IN.setCodec("UTF-8");
+        Gas &g= dynamic_cast <Gas &> (component);
+        IN >> g;
+    }
+    i.close();
+
     return in;
 }
 
 double Component::mu_0i(double ateta)
 {
-  double rez=0.0;
-  for (int i=0;i<4;++i)
-  {
-    rez+=Aik[i]*pow(ateta,i);
-  }
-  return rez;
+    double rez=0.0;
+    for (int i=0; i<4; ++i)
+    {
+        rez+=Aik[i]*pow(ateta,i);
+    }
+    return rez;
 }

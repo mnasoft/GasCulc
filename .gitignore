@@ -19,3 +19,7 @@ build/
 *~
 
 .directory
+
+# Rez files
+
+*.rez

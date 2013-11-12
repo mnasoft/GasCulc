@@ -20,6 +20,7 @@
 #ifndef AGAS_H
 #define AGAS_H
 
+#include <QVector>
 #include "component.h"
 
 class aGas
@@ -30,7 +31,7 @@ public:
     ~aGas();
     aGas& operator=(const aGas& other);
     bool operator==(const aGas& other);
-    Component c[21];
+    QVector<Component> X;
     friend QTextStream & operator<<(QTextStream & out, const aGas & agas);
     friend QTextStream & operator>>(QTextStream & in, aGas & agas);
 };

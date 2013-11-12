@@ -39,7 +39,19 @@ Gas::Gas(const QString &FileName)
 
 Gas::Gas(const Gas& other)
 {
+    Name=other.Name;
+    Formula=other.Formula;
 
+    for (int i=0; i<4; ++i)
+        Aik[i]=other.Aik[i];
+
+    T_c=other.T_c;
+    Ro_c=other.Ro_c;
+    M=other.M;
+    Omega=other.Omega;
+
+    for (int i=0; i<6; ++i)
+        Delta_i[i]=other.Delta_i[i];
 }
 
 Gas::~Gas()
@@ -49,7 +61,19 @@ Gas::~Gas()
 
 Gas& Gas::operator=(const Gas& other)
 {
+    Name=other.Name;
+    Formula=other.Formula;
 
+    for (int i=0; i<4; ++i)
+        Aik[i]=other.Aik[i];
+
+    T_c=other.T_c;
+    Ro_c=other.Ro_c;
+    M=other.M;
+    Omega=other.Omega;
+
+    for (int i=0; i<6; ++i)
+        Delta_i[i]=other.Delta_i[i];
 }
 
 bool Gas::operator==(const Gas& other)
@@ -61,7 +85,7 @@ QTextStream & operator<<(QTextStream & out, const Gas & gas)
 {
     out<<gas.Name<<"\n";
     out<<gas.Formula<<"\n";
-    
+
     for (int i=0; i<4; ++i)
         out<<gas.Aik[i]<<"\n";
     out<<"\n";
@@ -94,6 +118,6 @@ QTextStream & operator>>(QTextStream & in, Gas & gas)
 
     for (int i=0; i<6; ++i)
         in>>gas.Delta_i[i];
-    
+
     return in;
 }

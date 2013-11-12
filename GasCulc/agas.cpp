@@ -46,14 +46,17 @@ bool aGas::operator==(const aGas& other)
 
 QTextStream & operator<<(QTextStream & out, const aGas & agas)
 {
-    for(int i=0; i<21; ++i)
-        out<<agas.c[i];
+    for(int i=0; i<agas.X.size(); ++i)
+        out<<agas.X.at(i);
     return out;
 }
 
 QTextStream & operator>>(QTextStream & in, aGas & agas)
 {
-    for(int i=0; i<21; ++i)
-        in>>agas.c[i];
+    int i=0;
+    Component c_tmp;
+    while (!(in>>c_tmp).atEnd())
+      agas.X.append(c_tmp);
+
     return in;
 }
