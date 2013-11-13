@@ -35,15 +35,14 @@ public:
     QString Name;
     QString Formula;
     double Aik[4];
-    double Delta_i[6];
+    double Dik[6];
     
     double T_c;
     double Ro_c;
     double M;
     double Omega;    
     
-    static int i[6];
-    static int di [6];
+    static int delta_i [6];
     
     
     friend QTextStream & operator<<(QTextStream & out, const Gas & gas);

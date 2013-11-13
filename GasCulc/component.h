@@ -25,6 +25,7 @@
 
 class Component: protected Gas
 {
+  friend class aGas;
 public:
     Component();
     Component(const Component& other);

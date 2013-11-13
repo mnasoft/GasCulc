@@ -31,7 +31,13 @@ public:
     ~aGas();
     aGas& operator=(const aGas& other);
     bool operator==(const aGas& other);
+    
     QVector<Component> X;
+    
+    double fi_im[6];
+    double Mm();
+    void culc_fi_im();    
+    
     friend QTextStream & operator<<(QTextStream & out, const aGas & agas);
     friend QTextStream & operator>>(QTextStream & in, aGas & agas);
 };

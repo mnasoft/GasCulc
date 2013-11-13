@@ -18,8 +18,9 @@
  */
 
 #include "gas.h"
-
 #include <QFile>
+
+int Gas::delta_i[]={1,1,0,1,0,1};
 
 Gas::Gas()
 {
@@ -51,12 +52,11 @@ Gas::Gas(const Gas& other)
     Omega=other.Omega;
 
     for (int i=0; i<6; ++i)
-        Delta_i[i]=other.Delta_i[i];
+        Dik[i]=other.Dik[i];
 }
 
 Gas::~Gas()
 {
-
 }
 
 Gas& Gas::operator=(const Gas& other)
@@ -73,7 +73,7 @@ Gas& Gas::operator=(const Gas& other)
     Omega=other.Omega;
 
     for (int i=0; i<6; ++i)
-        Delta_i[i]=other.Delta_i[i];
+        Dik[i]=other.Dik[i];
 }
 
 bool Gas::operator==(const Gas& other)
@@ -97,7 +97,7 @@ QTextStream & operator<<(QTextStream & out, const Gas & gas)
     out<<"\n";
 
     for (int i=0; i<6; ++i)
-        out<<gas.Delta_i[i]<<"\n";
+        out<<gas.Dik[i]<<"\n";
 
     return out;
 }
@@ -117,7 +117,7 @@ QTextStream & operator>>(QTextStream & in, Gas & gas)
     in>>gas.Omega;
 
     for (int i=0; i<6; ++i)
-        in>>gas.Delta_i[i];
+        in>>gas.Dik[i];
 
     return in;
 }

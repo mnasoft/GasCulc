@@ -94,8 +94,6 @@ double Component::mu_0i(double ateta)
 {
     double rez=0.0;
     for (int i=0; i<4; ++i)
-    {
         rez+=Aik[i]*pow(ateta,i);
-    }
     return rez;
 }

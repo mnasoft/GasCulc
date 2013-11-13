@@ -60,3 +60,32 @@ QTextStream & operator>>(QTextStream & in, aGas & agas)
 
     return in;
 }
+
+double aGas::Mm()
+{
+  int sz=X.size();
+  double rez=0.0;
+  for(int i=0;i<sz;++i)
+  {
+    double a=X.at(i).M;
+    double b=X.at(i).v;
+    rez+=a*b;
+  }
+  return rez;
+}
+
+
+void aGas::culc_fi_im()
+{
+  int sz=X.size();
+  for(int i=0;i<6;++i)
+  {
+    fi_im[i]=Gas::delta_i[i];
+    for(int k=0; k<sz;++k)
+    {
+      double a=X.at(i).Dik[i];
+      double b=X.at(i).v;
+      fi_im[i]+=a*b;
+    }
+  }
+}
