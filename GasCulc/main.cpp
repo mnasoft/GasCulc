@@ -28,7 +28,7 @@ int main(int argc, char** argv)
         OUT.setRealNumberNotation(QTextStream::ScientificNotation);
         OUT.setNumberFlags(QTextStream::ForceSign);
         OUT<<G;
-        OUT<<"\n"<<G.Mm()<<"\n";
+        OUT<<"\n"<<G.M_m()<<"\n";
         G.culc_fi_im();
         for(int i=0; i<6; ++i)
             OUT<<i<<"\t"<<G.fi_im[i]<<"\n";

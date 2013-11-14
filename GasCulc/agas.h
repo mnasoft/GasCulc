@@ -35,7 +35,14 @@ public:
     QVector<Component> X;
     
     double fi_im[6];
-    double Mm();
+    double M_m();
+    double Omikron_m();
+    double Z_cm();
+    double v_cm_tilda();
+    double ro_cm_tilda();
+    double T_cm();
+    double P_cm();
+    
     void culc_fi_im();    
     
     friend QTextStream & operator<<(QTextStream & out, const aGas & agas);

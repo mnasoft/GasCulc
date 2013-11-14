@@ -18,6 +18,7 @@
  */
 
 #include "agas.h"
+#include <math.h>
 
 aGas::aGas()
 {
@@ -56,36 +57,106 @@ QTextStream & operator>>(QTextStream & in, aGas & agas)
     int i=0;
     Component c_tmp;
     while (!(in>>c_tmp).atEnd())
-      agas.X.append(c_tmp);
+        agas.X.append(c_tmp);
 
     return in;
 }
 
-double aGas::Mm()
+double aGas::M_m()
 {
-  int sz=X.size();
-  double rez=0.0;
-  for(int i=0;i<sz;++i)
-  {
-    double a=X.at(i).M;
-    double b=X.at(i).v;
-    rez+=a*b;
-  }
-  return rez;
+    int sz=X.size();
+    double rez=0.0;
+    for(int i=0; i<sz; ++i)
+    {
+        double a=X.at(i).M;
+        double b=X.at(i).v;
+        rez+=a*b;
+    }
+    return rez;
 }
 
+double aGas::Omikron_m()
+{
+    int sz=X.size();
+    double rez=0.0;
+    for(int i=0; i<sz; ++i)
+    {
+        double a=X.at(i).Omikron;
+        double b=X.at(i).v;
+        rez+=a*b;
+    }
+    return rez;
+}
+
+double aGas::Z_cm()
+{
+    return 0.291-0.08*Omikron_m();
+}
+
+double aGas::v_cm_tilda()
+{
+    const double n_1_3=1.0/3.0;
+    int sz=X.size();
+    double rez=0.0;
+    for(int k=0; k<sz; ++k)
+        for(int l=0; l<sz; ++l)
+        {
+            double xk=X.at(k).v;
+            double xl=X.at(l).v;
+            double Mk=X.at(k).M;
+            double Ml=X.at(l).M;
+            double rok=X.at(k).Ro_c;
+            double rol=X.at(l).Ro_c;
+            double v_ckl=pow(0.5*(pow(Mk/rok, n_1_3)+pow(Ml/rol, n_1_3)), 3.0);
+            rez+=xk*xl*v_ckl;
+        }
+    return rez;
+}
+
+double aGas::ro_cm_tilda()
+{
+    return 1.0/v_cm_tilda();
+}
+
+double aGas::T_cm()
+{
+    const double n_1_3=1.0/3.0;
+    int sz=X.size();
+    double rez=0.0;
+    for(int k=0; k<sz; ++k)
+        for(int l=0; l<sz; ++l)
+        {
+            double xk=X.at(k).v;
+            double xl=X.at(l).v;
+            double Mk=X.at(k).M;
+            double Ml=X.at(l).M;
+            double rok=X.at(k).Ro_c;
+            double rol=X.at(l).Ro_c;
+            double tck=X.at(k).T_c;
+            double tcl=X.at(l).T_c;
+            double v_ckl=pow(0.5*(pow(Mk/rok, n_1_3)+pow(Ml/rol, n_1_3)), 3.0);
+            double tckl=pow(tck*tcl, 0.5);
+            rez+=xk*xl*v_ckl*tckl;
+        }
+    return rez*ro_cm_tilda();
+}
+
+double aGas::P_cm()
+{
+    return 0.001*Gas::R*ro_cm_tilda()*T_cm()*Z_cm();
+}
 
 void aGas::culc_fi_im()
 {
-  int sz=X.size();
-  for(int i=0;i<6;++i)
-  {
-    fi_im[i]=Gas::delta_i[i];
-    for(int k=0; k<sz;++k)
+    int sz=X.size();
+    for(int i=0; i<6; ++i)
     {
-      double a=X.at(i).Dik[i];
-      double b=X.at(i).v;
-      fi_im[i]+=a*b;
+        fi_im[i]=Gas::delta_i[i];
+        for(int k=0; k<sz; ++k)
+        {
+            double a=X.at(i).Dik[i];
+            double b=X.at(i).v;
+            fi_im[i]+=a*b;
+        }
     }
-  }
 }

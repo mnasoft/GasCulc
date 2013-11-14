@@ -40,9 +40,10 @@ public:
     double T_c;
     double Ro_c;
     double M;
-    double Omega;    
+    double Omikron;    
     
     static int delta_i [6];
+    static const double R;
     
     
     friend QTextStream & operator<<(QTextStream & out, const Gas & gas);
