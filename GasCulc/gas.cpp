@@ -21,7 +21,8 @@
 #include <QFile>
 
 int Gas::delta_i[]={1,1,0,1,0,1};
-const double R=8.31451;
+const double Gas::R=8.31451;
+
 
 Gas::Gas()
 {
