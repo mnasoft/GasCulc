@@ -81,7 +81,7 @@ double aGas::Omikron_m()
     double rez=0.0;
     for(int i=0; i<sz; ++i)
     {
-        double a=X.at(i).Omikron;
+        double a=X.at(i).Omega;
         double b=X.at(i).v;
         rez+=a*b;
     }

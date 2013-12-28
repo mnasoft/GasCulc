@@ -51,7 +51,7 @@ Gas::Gas(const Gas& other)
     T_c=other.T_c;
     Ro_c=other.Ro_c;
     M=other.M;
-    Omikron=other.Omikron;
+    Omega=other.Omega;
 
     for (int i=0; i<6; ++i)
         Dik[i]=other.Dik[i];
@@ -72,7 +72,7 @@ Gas& Gas::operator=(const Gas& other)
     T_c=other.T_c;
     Ro_c=other.Ro_c;
     M=other.M;
-    Omikron=other.Omikron;
+    Omega=other.Omega;
 
     for (int i=0; i<6; ++i)
         Dik[i]=other.Dik[i];
@@ -95,7 +95,7 @@ QTextStream & operator<<(QTextStream & out, const Gas & gas)
     out<<gas.T_c<<"\n";
     out<<gas.Ro_c<<"\n";
     out<<gas.M<<"\n";
-    out<<gas.Omikron<<"\n";
+    out<<gas.Omega<<"\n";
     out<<"\n";
 
     for (int i=0; i<6; ++i)
@@ -116,7 +116,7 @@ QTextStream & operator>>(QTextStream & in, Gas & gas)
     in>>gas.T_c;
     in>>gas.Ro_c;
     in>>gas.M;
-    in>>gas.Omikron;
+    in>>gas.Omega;
 
     for (int i=0; i<6; ++i)
         in>>gas.Dik[i];
