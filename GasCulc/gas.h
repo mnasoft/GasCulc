@@ -32,18 +32,18 @@ public:
     Gas& operator=(const Gas& other);
     bool operator==(const Gas& other);
 
-    QString Name;
-    QString Formula;
-    double Aik[4];
-    double Dik[6];
+    QString Name;           ///<Имя компонента
+    QString Formula;        ///<Химичестая формула
+    double Aik[4];          ///<Значения коэффициентов  a_ik (см. ГОСТ Р 8.770—2011 - Таблица А.1 — Коэффициенты a_ik уравнения (5) для μ_0i основных компонентов природного газа).
     
-    double T_c;
-    double Ro_c;
-    double M;
-    double Omikron;    
+    double T_c;             ///<Критическая температура, К (см. ГОСТ Р 8.770—2011 - Таблица А.3).
+    double Ro_c;            ///<Критическая плотность, кг/м3 (см. ГОСТ Р 8.770—2011 - Таблица А.3).
+    double M;               ///<Молярная масса компонента, кг/кмоль (см. ГОСТ Р 8.770—2011 - Таблица А.3).
+    double Omega;           ///<Ω - Фактор Питцера (см. ГОСТ Р 8.770—2011 - Таблица А.3).
     
-    static int delta_i [6];
-    static const double R;
+    static int delta_i [6]; ///<δ_i Массив коэффициентов (см. ГОСТ Р 8.770—2011 - Таблица А.4).
+    double Dik[6];          ///<Коэффициенты d_ik (см. ГОСТ Р 8.770—2011 - Таблица А.4 - Значения коэффициентов {d_ik} для параметров афинных преобразований по формуле (15)).
+    static const double R;  ///<Универсальная газовая постоянная.
     
     
     friend QTextStream & operator<<(QTextStream & out, const Gas & gas);

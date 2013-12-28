@@ -1,7 +1,7 @@
 #ifndef GasCulc_H
 #define GasCulc_H
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 
 class GasCulc : public QMainWindow
 {

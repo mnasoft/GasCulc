@@ -33,11 +33,11 @@ public:
     Component& operator=(const Component& other);
     bool operator==(const Component& other);
     
-    int Number;
-    QString Name;
-    QString Formula;
-    QString File;
-    double v;
+    int Number;         ///<Номер компонента
+    QString Name;       ///<Имя компонента
+    QString Formula;    ///<Формула
+    QString File;       ///<Имя файла со значениями коэффициентов.
+    double v;           ///<Мольная доля компонента.
     
     double mu_0i(double ateta);
     double teta(double T){return T/100.0;} 

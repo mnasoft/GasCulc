@@ -1,9 +1,9 @@
 #include "GasCulc.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QAction>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
+#include <QAction>
 
 GasCulc::GasCulc()
 {

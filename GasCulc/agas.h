@@ -32,7 +32,7 @@ public:
     aGas& operator=(const aGas& other);
     bool operator==(const aGas& other);
     
-    QVector<Component> X;
+    QVector<Component> X; ///<Мольный состав газа в долях (см. таблица В.1 для контрольных смесей ГОСТ Р 8.770-2011).
     
     double fi_im[6];
     double M_m();
