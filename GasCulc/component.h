@@ -23,27 +23,35 @@
 #include <QTextStream>
 #include "gas.h"
 
-class Component: protected Gas
-{
-  friend class aGas;
+/**
+ * @brief Component представляет из себя отдельное химическое соединение (газ).
+ *
+ *
+ */
+
+class Component: public Gas {
+    friend class aGas;
 public:
     Component();
-    Component(const Component& other);
+    Component ( const Component& other );
+    Component ( double ax, const QString & fileName );
     ~Component();
-    Component& operator=(const Component& other);
-    bool operator==(const Component& other);
-    
-    int Number;         ///<Номер компонента
-    QString Name;       ///<Имя компонента
-    QString Formula;    ///<Формула
-    QString File;       ///<Имя файла со значениями коэффициентов.
-    double v;           ///<Мольная доля компонента.
-    
-    double mu_0i(double ateta);
-    double teta(double T){return T/100.0;} 
+    Component& operator= ( const Component& other );
+    bool operator== ( const Component& other ) const;
 
-    friend QTextStream & operator<<(QTextStream & out, const Component & component);
-    friend QTextStream & operator>>(QTextStream & in, Component & component);
+    QString File;       ///<Имя файла со значениями коэффициентов.
+    double x;           ///<Мольная доля компонента.
+
+    double mu_0i ( double ateta );
+    double teta ( double T ) {
+        return T/100.0;
+    }
+public:
+    void readGasData();
+    void writeGasData ( QTextStream & out ) const;
+public:
+    friend QTextStream & operator<< ( QTextStream & out, const Component & component );
+    friend QTextStream & operator>> ( QTextStream & in, Component & component );
 };
 
 #endif // COMPONENT_H

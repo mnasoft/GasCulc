@@ -19,4 +19,3 @@ GasCulc::GasCulc()
 GasCulc::~GasCulc()
 {}
 
-#include "GasCulc.moc"

@@ -69,20 +69,20 @@ double aGas::M_m()
     for(int i=0; i<sz; ++i)
     {
         double a=X.at(i).M;
-        double b=X.at(i).v;
+        double b=X.at(i).x;
         rez+=a*b;
     }
     return rez;
 }
 
-double aGas::Omikron_m()
+double aGas::Omega_m()
 {
     int sz=X.size();
     double rez=0.0;
     for(int i=0; i<sz; ++i)
     {
         double a=X.at(i).Omega;
-        double b=X.at(i).v;
+        double b=X.at(i).x;
         rez+=a*b;
     }
     return rez;
@@ -90,7 +90,7 @@ double aGas::Omikron_m()
 
 double aGas::Z_cm()
 {
-    return 0.291-0.08*Omikron_m();
+    return 0.291-0.08*Omega_m();
 }
 
 double aGas::v_cm_tilda()
@@ -101,8 +101,8 @@ double aGas::v_cm_tilda()
     for(int k=0; k<sz; ++k)
         for(int l=0; l<sz; ++l)
         {
-            double xk=X.at(k).v;
-            double xl=X.at(l).v;
+            double xk=X.at(k).x;
+            double xl=X.at(l).x;
             double Mk=X.at(k).M;
             double Ml=X.at(l).M;
             double rok=X.at(k).Ro_c;
@@ -126,8 +126,8 @@ double aGas::T_cm()
     for(int k=0; k<sz; ++k)
         for(int l=0; l<sz; ++l)
         {
-            double xk=X.at(k).v;
-            double xl=X.at(l).v;
+            double xk=X.at(k).x;
+            double xl=X.at(l).x;
             double Mk=X.at(k).M;
             double Ml=X.at(l).M;
             double rok=X.at(k).Ro_c;
@@ -154,8 +154,8 @@ void aGas::culc_fi_im()
         fi_im[i]=Gas::delta_i[i];
         for(int k=0; k<sz; ++k)
         {
-            double a=X.at(i).Dik[i];
-            double b=X.at(i).v;
+            double a=X.at(k).Dik[i];
+            double b=X.at(k).x;
             fi_im[i]+=a*b;
         }
     }

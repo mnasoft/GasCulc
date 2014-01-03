@@ -1,99 +1,73 @@
-/*
- * <one line to give the program's name and a brief idea of what it does.>
- * Copyright (C) 2013  <copyright holder> <email>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
 #include "component.h"
 #include <math.h>
 #include <QFile>
 
-Component::Component()
-{
-
+Component::Component() {
+    x=0.0;
+    File="";
 }
 
-Component::Component(const Component& other)
-: Gas(other)
-{
-    Number=other.Number;
-    Name=other.Name;
-    Formula=other.Formula;
+Component::Component ( const Component& other )
+    : Gas ( other ) {
     File=other.File;
-    v=other.v;
+    x=other.x;
 }
 
-Component::~Component()
-{
+Component::Component ( double ax, const QString & fileName )
+    : x ( ax ), Gas ( fileName ) {
+}
+
+Component::~Component() {
 
 }
 
-Component& Component::operator=(const Component& other)
-{
-    Number=other.Number;
-    Name=other.Name;
-    Formula=other.Formula;
+Component& Component::operator= ( const Component& other ) {
     File=other.File;
-    v=other.v;
+    x=other.x;
 }
 
-bool Component::operator==(const Component& other)
-{
+bool Component::operator== ( const Component& other ) const {
 
 }
 
-QTextStream & operator<<(QTextStream & out, const Component & component)
-{
-    out<<component.Number<<"\t";
-    out<<component.Name<<"\t";
-    out<<component.Formula<<"\t";
+void Component::readGasData() {
+
+    QString s_tmp=Gas::getInDir().filePath ( File );
+
+    QFile i ( s_tmp );
+    if ( i.open ( QFile::ReadOnly ) ) {
+        QTextStream IN ( &i );
+        IN.setCodec ( "UTF-8" );
+        Gas *g= this;
+        IN >> *g;
+    }
+    i.close();
+}
+
+void Component::writeGasData ( QTextStream & out ) const {
+    const Gas * g = this ;
+    out << *g;
+}
+
+QTextStream & operator<< ( QTextStream & out, const Component & component ) {
     out<<component.File<<"\t";
-    out<<component.v<<"\n";
-
-    const Gas & g= dynamic_cast <const Gas &> (component);
-    out<<g;
+    out<<component.x<<"\n";
+    component.writeGasData ( out );
     return out;
 }
 
-QTextStream & operator>>(QTextStream & in, Component & component)
-{
-    in>>component.Number;
-    in>>component.Name;
-    in>>component.Formula;
+
+
+QTextStream & operator>> ( QTextStream & in, Component & component ) {
     in>>component.File;
-    in>>component.v;
-    QString s_tmp=QString("")+"../ComponentData/"+component.File+".txt";
-
-    QFile i(s_tmp);
-    if (i.open( QFile::ReadOnly))
-    {
-        QTextStream IN(&i);
-        IN.setCodec("UTF-8");
-        Gas &g= dynamic_cast <Gas &> (component);
-        IN >> g;
-    }
-    i.close();
-
+    in>>component.x;
+    component.readGasData();
     return in;
 }
 
-double Component::mu_0i(double ateta)
-{
+double Component::mu_0i ( double ateta ) {
     double rez=0.0;
-    for (int i=0; i<4; ++i)
-        rez+=Aik[i]*pow(ateta,i);
+    for ( int i=0; i<4; ++i )
+        rez+=Aik[i]*pow ( ateta,i );
     return rez;
 }

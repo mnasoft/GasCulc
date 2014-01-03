@@ -4,36 +4,38 @@
 #include "gas.h"
 
 #include <QFile>
+#include <QString>
 #include <iostream>
 #include "agas.h"
 
-int main(int argc, char** argv)
-{
+int main ( int argc, char** argv ) {
+    Gas::setInDir ( QString::fromUtf8 ( "/home/namatv/MyDoc/git/mnasoft/CPP/GasCulc/GasCulc/ComponentData" ) );
     aGas G;
-    QFile in("../Gas/Gas_01.txt");
-    if (in.open( QFile::ReadOnly))
     {
-        QTextStream IN(&in);
-        IN.setCodec("UTF-8");
-        IN>>G;
+        QFile in ( "/home/namatv/MyDoc/git/mnasoft/CPP/GasCulc/GasCulc/Gas/Gas_01.txt" );
+        if ( in.open ( QFile::ReadOnly ) ) {
+            QTextStream IN ( &in );
+            IN.setCodec ( "UTF-8" );
+            IN>>G;
+        }
+        in.close();
     }
-    in.close();
-
-    QFile out("../Gas/Gas_01.rez");
-    if (out.open( QFile::WriteOnly))
     {
-        QTextStream OUT(&out);
-        OUT.setCodec("UTF-8");
-        OUT.setRealNumberPrecision (10 );
-        OUT.setRealNumberNotation(QTextStream::ScientificNotation);
-        OUT.setNumberFlags(QTextStream::ForceSign);
-        OUT<<G;
-        OUT<<"\n"<<G.M_m()<<"\n";
-        G.culc_fi_im();
-        for(int i=0; i<6; ++i)
-            OUT<<i<<"\t"<<G.fi_im[i]<<"\n";
+        QFile out ( "/home/namatv/MyDoc/git/mnasoft/CPP/GasCulc/GasCulc/Gas/Gas_01.rez" );
+        if ( out.open ( QFile::WriteOnly ) ) {
+            QTextStream OUT ( &out );
+            OUT.setCodec ( "UTF-8" );
+            OUT.setRealNumberPrecision ( 10 );
+            OUT.setRealNumberNotation ( QTextStream::ScientificNotation );
+            OUT.setNumberFlags ( QTextStream::ForceSign );
+            OUT<<G;
+            OUT<<"\n"<<G.M_m() <<"\n";
+            G.culc_fi_im();
+            for ( int i=0; i<6; ++i )
+                OUT<<i<<"\t"<<G.fi_im[i]<<"\n";
+        }
+        out.close();
     }
-    out.close();
 }
 
 /*

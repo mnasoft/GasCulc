@@ -1,4 +1,3 @@
 [Project]
-Name=GasCulc
 Manager=KDevCMakeManager
-VersionControl=
+Name=GasCulc
