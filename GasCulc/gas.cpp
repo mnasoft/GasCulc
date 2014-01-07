@@ -86,22 +86,22 @@ bool Gas::operator== ( const Gas &other ) {
 }
 
 QTextStream &operator<< ( QTextStream &out, const Gas &gas ) {
-    out << gas.Name << "\n";
-    out << gas.Formula << "\n";
+    out <<"Name" <<"\t"<<gas.Name << "\n";
+    out << "Formula"<<"\t"<< gas.Formula << "\n";
 
     for ( int i = 0; i < 4; ++i )
-        out << gas.Aik[i] << "\n";
+        out <<"Aik["<<i<<"]"<<"\t"<< gas.Aik[i] << "\n";
     out << "\n";
 
-    out << gas.T_c << "\n";
-    out << gas.Ro_c << "\n";
-    out << gas.M << "\n";
-    out << gas.Omega << "\n";
+    out <<"T_c"<<"\t"<<gas.T_c << "\n";
+    out <<QString ( "ρ_c" ) <<"\t"<< gas.Ro_c << "\n";
+    out <<"M"<<"\t"<< gas.M << "\n";
+    out <<QString ( "Ω" ) <<"\t"<< gas.Omega << "\n";
     out << "\n";
 
     for ( int i = 0; i < 6; ++i )
-        out << gas.Dik[i] << "\n";
-
+        out <<"Dik["<<i<<"]"<<"\t"<< gas.Dik[i] << "\n";
+    out << "\n";
     return out;
 }
 

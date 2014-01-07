@@ -9,7 +9,7 @@ find_package(Qt5Widgets REQUIRED)
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 
-set(GasCulc_SRCS agas.cpp component.cpp gas.cpp GasCulc.cpp main.cpp)
+set(GasCulc_SRCS param.cpp agas.cpp component.cpp gas.cpp GasCulc.cpp main.cpp)
 #qt4_automoc(${GasCulc_SRCS})
 
 add_executable(GasCulc ${GasCulc_SRCS})
