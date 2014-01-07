@@ -25,9 +25,9 @@ int main ( int argc, char** argv ) {
         if ( out.open ( QFile::WriteOnly ) ) {
             QTextStream OUT ( &out );
             OUT.setCodec ( "UTF-8" );
-            OUT.setRealNumberPrecision ( 10 );
-            OUT.setRealNumberNotation ( QTextStream::ScientificNotation );
-            OUT.setNumberFlags ( QTextStream::ForceSign );
+//             OUT.setRealNumberPrecision ( 10 );
+//             OUT.setRealNumberNotation ( QTextStream::ScientificNotation );
+//             OUT.setNumberFlags ( QTextStream::ForceSign );
             OUT<<G;
             OUT<<"\n"<<G.M_m() <<"\n";
             G.culc_fi_im();
