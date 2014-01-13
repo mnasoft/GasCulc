@@ -133,6 +133,43 @@ void aGas::culc_fi_im() {
     }
 }
 
+void aGas::culc_Bn_Zv() {
+    int N=X.size();
+    for ( int n=0; n<18; ++n ) {
+        Bn_Zv[n]=0.0;
+        for ( int i=0; i<N; ++i ) {
+            for ( int j=0; i<N; ++j ) {
+                double Bnij_Zv=calc_Bnij_Zv ( i,j );
+                Bn_Zv[n]+=X.at ( i ).x*X.at ( j ).x;
+            }
+        }
+        Bn_Zv[n]*=an[n];
+    }
+}
+
+double aGas::calc_Bnij_Zv ( int i, int j ) {
+/// todo wewe werw er  
+    return 1.0;
+}
+
+double aGas::calc_Gij_Zv ( int i, int j ) {
+    return 1.0;
+}
+
+double aGas::calc_Eij_Zv ( int i, int j ) {
+    return 1.0;
+}
+
+double aGas::calc_Gij ( int i, int j ) {
+    double rez=calc_Gij_Zv ( i,j ) * ( X.at ( i ).Gi+X.at ( j ).Gi ) /2.0;
+    return rez;
+}
+
+double aGas::calc_Eij ( int i, int j ) {
+    double rez=calc_Eij_Zv(i,j) *sqrt ( ( X.at ( i ).Ei*X.at ( j ).Ei ) );
+    return rez;
+}
+
 void aGas::read_D1_tbl() {
     QString fname=Gas::getInDir().filePath ( QString ( "tbl_D.1.txt" ) );
     {

@@ -35,6 +35,26 @@ public:
 
 public: //public->private
     double fi_im[6];		///<Параметры афинных преобразований для относительной плотности и температуры смеси (см. ГОСТ Р 8.770-2011, используемые в формулах 7).
+    double Bn_Zv [18];		///<(D.2)
+//    double 
+public: //public->private    
+    void culc_Bn_Zv();		///< Вычисление коэффициентов Β_n^* ГОСТ Р 8.662_2009.
+    double calc_Bnij_Zv(int i, int j);	///< Вычисление коэффициентов Β_nij^* ГОСТ Р 8.662_2009.
+    
+    double calc_Gij_Zv(int i, int j);
+    double calc_Eij_Zv(int i, int j);
+    
+    
+    double calc_Gij(int i, int j);
+    double calc_Eij(int i, int j);
+//     double calc_Qij(int i, int j);
+//     double calc_Fij(int i, int j);
+//     double calc_Wij(int i, int j);
+    
+    
+    
+    
+  
 private:
     static void read_D1_tbl();
     static bool is_D1_tbl_laded;///<Признак, того была-ли загружена таблица D.1
@@ -49,6 +69,7 @@ private:
     static double sn[58];
     static double wn[58];
 
+  
     friend QTextStream & operator<< ( QTextStream & out, const aGas & agas );
     friend QTextStream & operator>> ( QTextStream & in, aGas & agas );
 };
