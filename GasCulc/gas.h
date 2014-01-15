@@ -3,6 +3,7 @@
 
 #include <QTextStream>
 #include <QString>
+#include <QStringList>
 #include <QDir>
 
 /** 
@@ -53,6 +54,11 @@ public:
     double Fi;				///<Высокотемпературный параметр (см. таблица D.2 ГОСТ Р 8.662-2009).
     double Si;				///<Дипольный параметр (см. таблица D.2 ГОСТ Р 8.662-2009).
     double Wi;				///<Параметр ассоциации (см. таблица D.2 ГОСТ Р 8.662-2009).
+    
+    double Eij_zv[21];			///<Параметр бинарного взаимодействия Eij*(см. таблица D.3 ГОСТ Р 8.662-2009).
+    double Vij[21];			///<Параметр бинарного взаимодействия Vij(см. таблица D.3 ГОСТ Р 8.662-2009).
+    double Kij[21];			///<Параметр бинарного взаимодействия Kij(см. таблица D.3 ГОСТ Р 8.662-2009).
+    double Gij_zv[21];			///<Параметр бинарного взаимодействия Gij*(см. таблица D.3 ГОСТ Р 8.662-2009).
 
     static int delta_i [6];		///<δ_i Массив коэффициентов (см. ГОСТ Р 8.770—2011 - Таблица А.4).
     static const double R;		///<Универсальная газовая постоянная, кДж/(кмоль*К).
@@ -60,8 +66,15 @@ public:
 public:
     static void setInDir ( const QDir &other );	///<Устанавливает каталог для счивывания файлов.
     static QDir getInDir ( void );		///<Возвращает каталог для счивывания файлов.
+    static QStringList names_ru;
+    static QStringList names_en;
+    
+
 private:
     static QDir inDir;			///<Указывает путь к файлам для выполнения конструирования и ввода.
+    
+private:    
+    void init_coeffs();			///<Инициализация значением 1,0 всех параметров бинарного взаимодействия (см. таблица D.3 ГОСТ Р 8.662-2009).
 
     friend QTextStream &operator<< ( QTextStream &out, const Gas &gas );	///<Вывод данных в поток.
     friend QTextStream &operator>> ( QTextStream &in, Gas &gas );		///<Считывание данных из потока.
