@@ -70,6 +70,7 @@ void Gas::init_coeffs() {
     Ro_c = 0.0;
     M = 0.0;
     Omega = 0.0;
+
     for ( int i = 0; i < 6; ++i )
         Dik[i] = 0.00;
 
@@ -81,6 +82,7 @@ Gas::Gas ( const QString & fileName ) {
     init_coeffs();
     QString fn = inDir.filePath ( fileName );
     QFile in ( fn );
+
     if ( in.open ( QFile::ReadOnly ) ) {
         QTextStream IN ( &in );
         IN >> *this;
@@ -93,9 +95,11 @@ Gas::Gas ( const QString & fileName ) {
         msgBox.setStandardButtons ( QMessageBox::Ignore | QMessageBox::Abort );
         msgBox.setDefaultButton ( QMessageBox::Abort );
         int ret = msgBox.exec();
+
         switch ( ret ) {
         case QMessageBox::Abort :
             break;
+
         case  QMessageBox::Ignore :
             break;
         }
@@ -184,6 +188,7 @@ QTextStream &operator<< ( QTextStream &out, const Gas &gas ) {
 
     for ( int i = 0; i < 4; ++i )
         out << "Aik[" << i << "]" << "\t\t\t\t\t" << gas.Aik[i] << "\n";
+
     out << "\n";
 
     out << "T_c" << "\t\t\t\t\t" << gas.T_c << "\n";
@@ -194,6 +199,7 @@ QTextStream &operator<< ( QTextStream &out, const Gas &gas ) {
 
     for ( int i = 0; i < 6; ++i )
         out << "Dik[" << i << "]" << "\t\t\t\t\t" << gas.Dik[i] << "\n";
+
     out << "\n";
 
     out << QString::fromUtf8 ( "Энергетический_параметр_Ei" ) << "\t\t" << gas.Ei << "\n";
@@ -207,9 +213,10 @@ QTextStream &operator<< ( QTextStream &out, const Gas &gas ) {
 
     out << "i" << "\t" << "j" << "\t" << "Comp1" << "\t\t\t" << "Comp2"
         << "\t\t\t" << "Eij*" << "\t\t" << "Vij" << "\t\t" << "Kij" << "\t\t" << "Gij*" << "\n";
+
     for ( int i = 0; i < 21; ++i ) {
         out << gas.Number << "\t" << i + 1 << "\t"
-            << Gas::names_ru.at ( gas.Number-1 ) << "\t\t\t" << Gas::names_ru.at ( i ) << "\t\t\t"
+            << Gas::names_ru.at ( gas.Number - 1 ) << "\t\t\t" << Gas::names_ru.at ( i ) << "\t\t\t"
             << gas.Eij_zv[i] << "\t\t" << gas.Vij[i] << "\t\t" << gas.Kij[i] << "\t\t"
             << gas.Gij_zv[i] << "\n";
     }
@@ -241,6 +248,28 @@ QTextStream &operator>> ( QTextStream &in, Gas &gas ) {
     in >> tmp >> gas.Fi;
     in >> tmp >> gas.Si;
     in >> tmp >> gas.Wi;
+
+    QString Si, Sj, SComp1, SComp2, SEij_zv, SVij, SKij, SGij_zv;
+
+    in >> Si >> Sj >> SComp1 >> SComp2 >> SEij_zv >> SVij >> SKij >> SGij_zv;
+
+    int Di = 0, Dj = 0;
+    QString DComp1, DComp2;
+    double DEij_zv = 0.0, DVij = 0.0, DKij = 0.0, DGij_zv = 0.0;
+    bool doit = true;
+
+    while ( doit ) {
+        in >> Di >> Dj >> DComp1 >> DComp2 >> DEij_zv >> DVij >> DKij >> DGij_zv;
+
+        if ( in.status() == QTextStream::Ok ) {
+            gas.Eij_zv[Dj - 1] = DEij_zv;
+            gas.Vij[Dj - 1] = DVij;
+            gas.Kij[Dj - 1] = DKij;
+            gas.Gij_zv[Dj - 1] = DGij_zv;
+        }
+        else
+            doit = false;
+    }
 
     return in;
 }
