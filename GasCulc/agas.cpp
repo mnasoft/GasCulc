@@ -153,6 +153,7 @@ double aGas::calc_Bnij_Zv ( int i, int j ) {
 }
 
 double aGas::calc_Gij_Zv ( int i, int j ) {
+  this->X.at(i).Gij_zv[j];
     return 1.0;
 }
 

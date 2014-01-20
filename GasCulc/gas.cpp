@@ -55,6 +55,16 @@ QStringList Gas::names_en =
     << QString::fromUtf8 ( "He" )
     << QString::fromUtf8 ( "Ar" );
 
+QTextStream & tab_string ( QTextStream &out, const QString &s, int tab = 3 ) {
+    int len = tab - s.length() / 8;
+    out << s;
+
+    for ( int i = 0; i < len ; ++i )
+        out << "\t";
+
+    return out;
+}
+
 Gas::Gas() {
     init_coeffs();
 }
@@ -182,49 +192,109 @@ bool Gas::operator== ( const Gas &other ) {
 }
 
 QTextStream &operator<< ( QTextStream &out, const Gas &gas ) {
+    out.setFieldAlignment ( QTextStream::AlignLeft );
+
     out << gas.Name << "\n";
     out << gas.Formula << " -> " << gas.Zamenitel << "\n";
-    out << "Number" << "\t\t\t\t\t" << gas.Number << "\n";
 
-    for ( int i = 0; i < 4; ++i )
-        out << "Aik[" << i << "]" << "\t\t\t\t\t" << gas.Aik[i] << "\n";
-
+    out.setFieldWidth ( 12 );
+    out << "Number" << gas.Number ;
+    out.setFieldWidth ( 0 );
     out << "\n";
 
-    out << "T_c" << "\t\t\t\t\t" << gas.T_c << "\n";
-    out << QString ( "ρ_c" ) << "\t\t\t\t\t" << gas.Ro_c << "\n";
-    out << QString::fromUtf8 ( "Молярная_масса_Μi,кг/кмоль" ) << "\t\t" << gas.M << "\n";
-    out << QString ( "Ω" ) << "\t\t\t\t\t" << gas.Omega << "\n";
+    for ( int i = 0; i < 4; ++i ) {
+        out << "Aik[" << i << "]" ;
+        out.setFieldWidth ( 12 );
+        out << "" << gas.Aik[i] ;
+        out.setFieldWidth ( 0 );
+        out << "\n";
+    }
+
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << "T_c" <<  gas.T_c;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString ( "ρ_c" )  << gas.Ro_c;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Молярная_масса_Μi,кг/кмоль" )  << gas.M ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString ( "Ω" ) << gas.Omega ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
     out << "\n";
 
-    for ( int i = 0; i < 6; ++i )
-        out << "Dik[" << i << "]" << "\t\t\t\t\t" << gas.Dik[i] << "\n";
+    for ( int i = 0; i < 6; ++i ) {
+        out << "Dik[" << i << "]";
+        out.setFieldWidth ( 12 );
+        out << "" << gas.Dik[i];
+        out.setFieldWidth ( 0 );
+        out << "\n";
+    }
 
     out << "\n";
-
-    out << QString::fromUtf8 ( "Энергетический_параметр_Ei" ) << "\t\t" << gas.Ei << "\n";
-    out << QString::fromUtf8 ( "Параметр_размера_Ki,(м3/кмоль)^1/3" ) << "\t" << gas.Ki << "\n";
-    out << QString::fromUtf8 ( "Ориентационный_параметр_Gi" ) << "\t\t" << gas.Gi << "\n";
-    out << QString::fromUtf8 ( "Квадрупольный_параметр_Qi" ) << "\t\t" << gas.Qi << "\n";
-    out << QString::fromUtf8 ( "Высокотемпературный_параметр_Fi" ) << "\t\t" << gas.Fi << "\n";
-    out << QString::fromUtf8 ( "Дипольный_параметр_Si" ) << "\t\t\t" << gas.Si << "\n";
-    out << QString::fromUtf8 ( "Параметр_ассоциации_Wi" ) << "\t\t\t" << gas.Wi << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Энергетический_параметр_Ei" ) << gas.Ei ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Параметр_размера_Ki,(м3/кмоль)^1/3" ) << gas.Ki ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Ориентационный_параметр_Gi" )  << gas.Gi ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Квадрупольный_параметр_Qi" )  << gas.Qi ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Высокотемпературный_параметр_Fi" )  << gas.Fi ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Дипольный_параметр_Si" )  << gas.Si ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
+    out.setFieldWidth ( 40 );
+    out << QString::fromUtf8 ( "Параметр_ассоциации_Wi" )  << gas.Wi ;
+    out.setFieldWidth ( 0 );
     out << "\n";
 
-    out << "i" << "\t" << "j" << "\t" << "Comp1" << "\t\t\t" << "Comp2"
-        << "\t\t\t" << "Eij*" << "\t\t" << "Vij" << "\t\t" << "Kij" << "\t\t" << "Gij*" << "\n";
+    out.setFieldWidth ( 0 );
+    out << "\n";
+
+    out.setFieldWidth ( 8 );
+    out << "i" << "j";
+    out.setFieldWidth ( 24 );
+    out << "Comp1" << "Comp2";
+    out.setFieldWidth ( 16 );
+    out << "Eij*"  << "Vij"  << "Kij" << "Gij*" ;
+    out.setFieldWidth ( 0 );
+    out << "\n";
 
     for ( int i = 0; i < 21; ++i ) {
-        out << gas.Number << "\t" << i + 1 << "\t"
-            << Gas::names_ru.at ( gas.Number - 1 ) << "\t\t\t" << Gas::names_ru.at ( i ) << "\t\t\t"
-            << gas.Eij_zv[i] << "\t\t" << gas.Vij[i] << "\t\t" << gas.Kij[i] << "\t\t"
-            << gas.Gij_zv[i] << "\n";
+        out.setFieldWidth ( 8 );
+        out << gas.Number << i + 1;
+        out.setFieldWidth ( 24 );
+        out << Gas::names_ru.at ( gas.Number - 1 ) << Gas::names_ru.at ( i );
+        out.setFieldWidth ( 16 );
+        out.setFieldAlignment ( QTextStream::AlignLeft );
+        out << gas.Eij_zv[i] << gas.Vij[i] << gas.Kij[i] << gas.Gij_zv[i] ;
+        out.setFieldWidth ( 0 );
+        out << "\n";
     }
 
     return out;
 }
 
-QTextStream &operator>> ( QTextStream &in, Gas &gas ) {
+QTextStream & operator>> ( QTextStream &in, Gas &gas ) {
     QString tmp;
     in >> gas.Name;
     in >> gas.Formula >> tmp >> gas.Zamenitel;
